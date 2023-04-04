@@ -13,7 +13,8 @@ conn = mysql.connector.connect(
     auth_plugin='mysql_native_password'
 )
 cursor = conn.cursor()
-
+cursor.execute("DROP TABLE animal")  #Je met les drop table pour rénitialiser, qu'on pourrait enlever si j'enleve les animaux que je mets de base
+cursor.execute("DROP TABLE cage")
 TABLE = {}
 TABLE["cage"] = (
     "CREATE TABLE `cage` ("
@@ -50,16 +51,16 @@ add_animal = ("INSERT INTO animal "
               "( nom, race, naissance, pays, id_cage) "
               "VALUES ( %s, %s, %s, %s, %s)")
 add_cage = ("INSERT INTO cage "
-            "(id,capacite,superficie) "
-            "VALUES (%s, %s, %s)")
+            "(capacite,superficie) "
+            "VALUES ( %s, %s)")
 
 donnees_animal = [("Tigrou","Tigre du Bingal","12/15/2019","Bingal",1),("Caramel","Cheval","11/06/2008","France",2),("Winnie","Grizzlie","08/10/2015","Canada",3),("Bourriquet","Ane","02/25/2010","Allemagne",2)]
-donnees_cage = [(1,5,50),(2,10,300),(3,2,40),(4,1,20)]
+donnees_cage = [(5,50),(10,300),(2,40),(1,20)]
 for i in donnees_animal:
     cursor.execute(add_animal, i)
 for i in donnees_cage:
     cursor.execute(add_cage, i)
-
+conn.commit()
 
 cursor.execute("SELECT * FROM animal")
 resultat = cursor.fetchall()
@@ -87,6 +88,7 @@ Monsieur le directeur, que voulez vous faire ?
             naissance = input("\nNaissance (mm/dd/yyyy): ")
             pays = input("\nPays : ")
             cursor.execute(add_animal, (nom,race,naissance,pays,cage))
+            conn.commit()
         elif action_gestion == "2":
             id = int(input("\ID : "))
             newCage = int(input("\Cage : "))
