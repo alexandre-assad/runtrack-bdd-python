@@ -1,0 +1,1 @@
+SELECT Avg(age) FROM Etudiants;

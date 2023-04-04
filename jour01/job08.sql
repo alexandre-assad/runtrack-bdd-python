@@ -1,0 +1,1 @@
+SELECT * FROM Etudiants WHERE Etudiants.age < 18;

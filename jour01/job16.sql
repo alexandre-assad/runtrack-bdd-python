@@ -1,0 +1,1 @@
+SELECT * FROM Etudiants WHERE LEFT(Etudiants.nom,1) = "b";

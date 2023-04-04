@@ -1,0 +1,1 @@
+ SELECT * FROM Etudiants WHERE age <= 25 AND age >= 18;
